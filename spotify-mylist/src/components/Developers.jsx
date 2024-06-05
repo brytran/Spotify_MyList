@@ -3,8 +3,6 @@ import Thu from "../assets/Thu.jpg";
 import Matthew from "../assets/Matt.jpg";
 import Ben from "../assets/Ben.jpg";
 import linkedin from "../assets/linkedin.png";
-import linkedin from "../assets/linkedin.png";
-
 function Developers() {
   return (
     <>

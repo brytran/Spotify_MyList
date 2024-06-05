@@ -1,0 +1,119 @@
+.navbar-container {
+  background-color: #121212;
+  width: 100vw;
+  min-height: 5rem;
+  height: auto;
+  display: block;
+}
+
+.navbar-font {
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  height: fit-content;
+  margin: auto 0 auto 0;
+  font-size: 1.2rem;
+  font-family: "Montserrat", "sans-serif";
+}
+
+#title-font {
+  width: 11rem;
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+}
+
+#logo {
+  width: 3rem;
+  height: 3rem;
+  margin: auto 0 auto 0;
+}
+
+#title-group {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+  padding-top: 1rem;
+}
+
+.links-group {
+  padding-top: 3rem;
+  margin: 0 auto 0 auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.link {
+  font-size: 1.75rem;
+  margin: 10% 4% 10% 4%;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+.link:hover {
+  opacity: 0.6;
+}
+
+.link:visited {
+  text-decoration: none;
+}
+
+#logout {
+  display: none;
+}
+
+.toggle-button {
+  width: 5rem;
+  height: 5rem;
+}
+
+#menu-button {
+  border: none;
+  background: none;
+  position: relative;
+  z-index: 2;
+  top: -4.5rem;
+  left: 1rem;
+}
+
+#menu-img {
+  height: 4rem;
+}
+
+@media (max-width: 500px) {
+  #menu-img {
+    height: 3rem;
+  }
+
+  #menu-button {
+    margin: 0.7rem 0 auto 0;
+  }
+}
+
+@media (max-width: 420px) {
+  #title-group {
+    margin-left: 20vw;
+  }
+}
+
+.side-menu {
+  background-color: #535353;
+  position: absolute;
+  width: 20rem;
+  height: 79vh;
+  min-height: 25rem;
+  top: 5rem;
+  left: -20rem;
+  transition: left 0.2s linear;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.toggleMenuOn {
+  left: 0;
+}

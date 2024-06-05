@@ -1,0 +1,53 @@
+.welcome-container {
+  margin: 0 auto 0 auto;
+}
+
+.instructions-container {
+  margin: 3rem auto 3rem auto;
+  width: fit-content;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
+
+#home-title-font {
+  font-size: 3rem;
+}
+
+#sub-title-font {
+}
+
+.spotify-font {
+  font-family: "Montserrat", "sans-serif";
+  color: #ffffff;
+  margin: 0 auto 0 auto;
+  width: fit-content;
+  text-align: center;
+  text-decoration: none;
+}
+
+@media (max-width: 1250px) {
+  .instructions-container {
+    grid-template-columns: auto auto;
+  }
+}
+
+#start {
+  display: block;
+  line-height: 4rem;
+  height: 4rem;
+  width: 20rem;
+}
+
+.start-button-container {
+  margin: 5rem auto 0 auto;
+  width: 20rem;
+  height: 4rem;
+  font-size: 1.5rem;
+  background-color: #1db954;
+  text-align: center;
+  border-radius: 1.5rem;
+}
+
+.start-button-container:hover {
+  box-shadow: 0 0 1rem 0.2rem #94e08a;
+}
