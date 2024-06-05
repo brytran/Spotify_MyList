@@ -1,0 +1,80 @@
+.developer-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 2rem;
+  column-gap: 2rem;
+  width: fit-content;
+  margin: 5rem auto 0 auto;
+}
+
+.developer-card {
+  width: 27rem;
+  height: 12rem;
+  background-color: #2a2a2a;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-picture {
+  height: 80%;
+  margin: auto 5% auto 5%;
+  border-radius: 0.5rem;
+}
+
+.dev-info {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto 0 auto;
+}
+
+.name {
+  font-size: 1.75rem;
+  margin-left: 0;
+  line-height: 1.5rem;
+}
+
+.linkedin {
+  width: 4rem;
+  margin: 0 auto 0 auto;
+}
+
+.linkedin:hover {
+  opacity: 0.7;
+}
+
+.school {
+  margin-bottom: 1rem;
+  margin-left: 0;
+}
+
+.dev-title {
+  font-size: 3rem;
+}
+
+@media (max-width: 920px) {
+  .developer-card {
+    width: 20rem;
+    height: 12rem;
+  }
+
+  .name {
+    font-size: 1.5rem;
+    margin-left: auto;
+  }
+
+  .school {
+    font-size: 0.9rem;
+    margin-left: auto;
+  }
+  .linkedin {
+    width: 3rem;
+    margin: 0 auto 0 auto;
+  }
+}
+
+@media (max-width: 730px) {
+  .developer-container {
+    grid-template-columns: auto;
+  }
+}

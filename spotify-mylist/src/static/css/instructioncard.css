@@ -1,0 +1,31 @@
+.instruction-card-container {
+  width: fit-content;
+}
+
+.instruction-card {
+  background-color: #2a2a2a;
+  width: 14rem;
+  height: 21rem;
+  margin: 0 1rem 1rem 1rem;
+  border-radius: 15px;
+}
+
+@media (max-width: 660px) {
+  .instruction-card {
+    width: 12rem;
+    height: 18rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .instruction-card {
+    width: 8rem;
+    height: 14rem;
+  }
+}
+
+.instruction-image {
+  width: 75%;
+  border-radius: 0.5rem;
+  margin: 1rem 12% 0 12%;
+}
