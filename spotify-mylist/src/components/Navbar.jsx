@@ -2,9 +2,12 @@ import msu from "../assets/msu-logo.png";
 import menu from "../assets/menu.png";
 import { useEffect } from "react";
 import React, { useRef } from "react";
+import spotifyLogin from "../static/js/main";
+import { redirect } from "react-router-dom";
 function Navbar() {
   const sideMenu = useRef(null);
   const menuButton = useRef(null);
+  const loginButton = useRef(null);
   useEffect(() => {
     if (sideMenu && sideMenu.current && menuButton && menuButton.current) {
       menuButton.current.addEventListener("click", (event) => {
@@ -12,6 +15,10 @@ function Navbar() {
         sideMenu.current.classList.toggle("toggleMenuOn");
       });
     }
+
+    loginButton.current.addEventListener("click", () => {
+      spotifyLogin();
+    });
   }, []);
 
   return (
@@ -42,7 +49,7 @@ function Navbar() {
           <a className="navbar-font link" id="devs" href="/developers">
             Developers
           </a>
-          <a className="navbar-font link" id="login">
+          <a className="navbar-font link" id="login" ref={loginButton}>
             Login
           </a>
           <a className="navbar-font link" id="logout">

@@ -253,11 +253,24 @@ function Create() {
           </div>
         </div>
         <div className="add-container">
+          <div className="name-container">
+            <p className="spotify-font create-font">MyList Title:</p>
+            <input
+              type="text"
+              placeholder="Playlist Name:"
+              id="playlist-name"
+            ></input>
+          </div>
           <div className="search-container">
+            <p className="spotify-font create-font">
+              Choose your genres: (Max 5)
+            </p>
+
             <input
               type="text"
               placeholder="Search genres:"
               onChange={(e) => handleSearch(e.target.value)}
+              id="genres"
             />
 
             {/* Display search results */}
