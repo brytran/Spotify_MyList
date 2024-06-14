@@ -2,7 +2,7 @@ import msu from "../assets/msu-logo.png";
 import menu from "../assets/menu.png";
 import { useEffect } from "react";
 import React, { useRef } from "react";
-import spotifyLogin from "../static/js/main";
+import { spotifyLogin } from "../static/js/main";
 import { redirect } from "react-router-dom";
 function Navbar() {
   const sideMenu = useRef(null);
@@ -11,7 +11,6 @@ function Navbar() {
   useEffect(() => {
     if (sideMenu && sideMenu.current && menuButton && menuButton.current) {
       menuButton.current.addEventListener("click", (event) => {
-        console.log("hit");
         sideMenu.current.classList.toggle("toggleMenuOn");
       });
     }
