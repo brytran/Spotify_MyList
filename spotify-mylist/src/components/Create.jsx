@@ -6,7 +6,8 @@ import logo5 from "../assets/logo5.png";
 import next from "../assets/next.png";
 import { useEffect, useState } from "react";
 import React, { useRef } from "react";
-import { getGenres } from "../static/js/main";
+import ReactDOM from "react-dom";
+import { getGenres, generateAlbum } from "../static/js/main";
 function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
   const [index, setIndex] = useState(0);
@@ -15,10 +16,14 @@ function Create() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [itemList, setItemList] = useState([]);
+  const [albumTitle, setTitle] = useState("");
+  const [selectedImage, setImage] = useState("");
 
   const backwardButton = useRef(null);
   const forwardButton = useRef(null);
   const searchBar = useRef(null);
+  const playlistTitle = React.createRef();
+  const generatePlaylist = React.createRef();
 
   const image1 = useRef(null);
   const image2 = useRef(null);
@@ -143,6 +148,7 @@ function Create() {
               type="text"
               placeholder="Playlist Name:"
               id="playlist-name"
+              ref={playlistTitle}
             ></input>
           </div>
           <div className="search-container">
@@ -181,11 +187,15 @@ function Create() {
         </div>
       </div>
 
-      <div className="spotify-font" id="create-album-container">
+      <div
+        className="spotify-font"
+        id="create-album-container"
+        ref={generatePlaylist}
+      >
         <a
           id="create-album"
           onClick={function () {
-            console.log(selectedItems);
+            generateAlbum(selectedItems, playlistTitle.current.value);
           }}
         >
           Create!

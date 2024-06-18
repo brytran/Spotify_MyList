@@ -125,6 +125,10 @@ async function generateCodeChallenge(codeVerifier) {
     .replace(/=+$/, "");
 }
 
+//////////////////////////////////////////////////////////////////////
+//                             Requests                             //
+//////////////////////////////////////////////////////////////////////
+
 async function getGenres() {
   refreshToken();
   var token = localStorage.getItem("access_token");
@@ -145,8 +149,42 @@ async function getGenres() {
   }
 }
 
-//////////////////////////////////////////////////////////////////////
-//                             Encryption                           //
-//////////////////////////////////////////////////////////////////////
+async function generateAlbum(playlistGenres, playlistTitle) {
+  refreshToken();
+  var token = localStorage.getItem("access_token");
+  var genres = playlistGenres.join(",");
+  var songIDS = [];
 
-export { redirectToAuthCodeFlow, getAccessToken, spotifyLogin, getGenres };
+  console.log(genres);
+  console.log(playlistTitle);
+  try {
+    // const params = new URLSearchParams();
+    // params.append("min_popularity", 70);
+    // params.append("seed_genres", genres);
+    // params.append("limit", 30);
+    // params.append("market", "US");
+
+    const result = await fetch(
+      `https://api.spotify.com/v1/recommendations?min_popularity=70&seed_genres=${genres}&limit=30&market=US`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    var res = await result.json();
+    console.log(res);
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to retreive recommended songs");
+    return;
+  }
+}
+
+export {
+  redirectToAuthCodeFlow,
+  getAccessToken,
+  spotifyLogin,
+  getGenres,
+  generateAlbum,
+};
