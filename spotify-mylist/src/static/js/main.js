@@ -17,18 +17,6 @@ async function spotifyLogin() {
 }
 
 async function getAccessToken() {
-  // console.log(
-  //   localStorage.getItem("expires_at") &&
-  //     localStorage.getItem("expires_at") <= currentTime
-  // );
-
-  // if (
-  //   localStorage.getItem("expires_at") &&
-  //   localStorage.getItem("expires_at") <= currentTime
-  // ) {
-  //   refreshToken();
-  // }
-
   const verifier = localStorage.getItem("verifier");
 
   const params = new URLSearchParams();
@@ -61,7 +49,15 @@ async function getAccessToken() {
 var currentTime = new Date();
 
 async function refreshToken() {
-  console.log("hit");
+  //add refresh check to every page? or every api call
+
+  if (!localStorage.getItem("expires_at")) {
+    return;
+  }
+
+  if (localStorage.getItem("expires_at") > currentTime) {
+    return;
+  }
   const verifier = localStorage.getItem("verifier");
 
   const params = new URLSearchParams();
@@ -80,8 +76,8 @@ async function refreshToken() {
     await result.json();
 
   var expires = new Date();
-  // expires.setSeconds(expires.getSeconds() + expires_in);
-  expires.setSeconds(expires.getSeconds() + 10);
+  expires.setSeconds(expires.getSeconds() + expires_in);
+
   localStorage.setItem("access_token", access_token);
   localStorage.setItem("expires_at", expires);
   localStorage.setItem("refresh_token", refresh_token);
@@ -130,7 +126,23 @@ async function generateCodeChallenge(codeVerifier) {
 }
 
 async function getGenres() {
-  return;
+  refreshToken();
+  var token = localStorage.getItem("access_token");
+  try {
+    const result = await fetch(
+      "https://api.spotify.com/v1/recommendations/available-genre-seeds",
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    var res = await result.json();
+    return res;
+  } catch {
+    console.log("Failed to retrieve genres");
+    return [];
+  }
 }
 
 //////////////////////////////////////////////////////////////////////

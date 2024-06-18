@@ -14,6 +14,7 @@ function Create() {
   const [tracker, setTracker] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
+  const [itemList, setItemList] = useState([]);
 
   const backwardButton = useRef(null);
   const forwardButton = useRef(null);
@@ -22,8 +23,16 @@ function Create() {
   const image1 = useRef(null);
   const image2 = useRef(null);
 
-  let itemList = getGenres();
-  // console.log(itemList);
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const response = await getGenres();
+        setItemList(response.genres);
+      } catch {}
+    };
+
+    fetchGenres();
+  }, []);
 
   const handleSelect = (item) => {
     if (selectedItems.length < 5 && !selectedItems.includes(item)) {
