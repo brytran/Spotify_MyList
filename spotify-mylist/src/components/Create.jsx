@@ -12,6 +12,7 @@ function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
   const [index, setIndex] = useState(0);
   const [otherIndex, setOtherIndex] = useState(0);
+  const [trueIndex, setTrueIndex] = useState(0);
   const [tracker, setTracker] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
@@ -65,6 +66,7 @@ function Create() {
 
     setFilteredItems(filterItems);
   };
+
   return (
     <>
       <div className="create-title-container spotify-font">
@@ -132,8 +134,8 @@ function Create() {
                       setOtherIndex(index + 1);
                     }
                   }
-
                   setTracker(!tracker);
+
                   image1.current.classList.toggle("hidden");
                   image2.current.classList.toggle("hidden");
                 }}
@@ -195,6 +197,13 @@ function Create() {
         <a
           id="create-album"
           onClick={function () {
+            var imgPath;
+            if (tracker) {
+              imgPath = image1.current.src;
+            } else {
+              imgPath = image2.current.src;
+            }
+            console.log(imgPath);
             generateAlbum(selectedItems, playlistTitle.current.value);
           }}
         >

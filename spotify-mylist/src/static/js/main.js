@@ -46,16 +46,16 @@ async function getAccessToken() {
   localStorage.setItem("refresh_token", refresh_token);
   return access_token;
 }
-var currentTime = new Date();
 
 async function refreshToken() {
   //add refresh check to every page? or every api call
+  var currentTime = new Date();
 
   if (!localStorage.getItem("expires_at")) {
     return;
   }
-
-  if (localStorage.getItem("expires_at") > currentTime) {
+  var expTime = new Date(localStorage.getItem("expires_at"));
+  if (expTime > currentTime) {
     return;
   }
   const verifier = localStorage.getItem("verifier");
@@ -84,10 +84,6 @@ async function refreshToken() {
   return access_token;
 }
 
-function populateUI(profile) {
-  // TODO: Update UI with profile data
-}
-
 async function redirectToAuthCodeFlow(clientId) {
   const verifier = generateCodeVerifier(128);
   const challenge = await generateCodeChallenge(verifier);
@@ -98,7 +94,10 @@ async function redirectToAuthCodeFlow(clientId) {
   params.append("client_id", clientId);
   params.append("response_type", "code");
   params.append("redirect_uri", redirect_uri);
-  params.append("scope", "user-read-private user-read-email");
+  params.append(
+    "scope",
+    "playlist-modify-public playlist-modify-private user-read-private user-read-email ugc-image-upload"
+  );
   params.append("code_challenge_method", "S256");
   params.append("code_challenge", challenge);
 
@@ -149,21 +148,32 @@ async function getGenres() {
   }
 }
 
-async function generateAlbum(playlistGenres, playlistTitle) {
+async function getUserID() {
+  refreshToken();
+  var token = localStorage.getItem("access_token");
+  try {
+    const result = await fetch(`https://api.spotify.com/v1/me`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    var { id } = await result.json();
+    return id;
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to fetch user ID");
+  }
+}
+
+async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   refreshToken();
   var token = localStorage.getItem("access_token");
   var genres = playlistGenres.join(",");
   var songIDS = [];
+  var userID = await getUserID();
+  console.log(userID);
 
-  console.log(genres);
-  console.log(playlistTitle);
   try {
-    // const params = new URLSearchParams();
-    // params.append("min_popularity", 70);
-    // params.append("seed_genres", genres);
-    // params.append("limit", 30);
-    // params.append("market", "US");
-
     const result = await fetch(
       `https://api.spotify.com/v1/recommendations?min_popularity=70&seed_genres=${genres}&limit=30&market=US`,
       {
@@ -172,11 +182,60 @@ async function generateAlbum(playlistGenres, playlistTitle) {
       }
     );
 
-    var res = await result.json();
-    console.log(res);
+    var { tracks } = await result.json();
+    for (let i = 0; i < tracks.length; i++) {
+      songIDS.push(tracks[i].uri);
+    }
   } catch (e) {
     console.log(e);
     console.log("Failed to retreive recommended songs");
+    return;
+  }
+
+  try {
+    refreshToken();
+
+    const result = await fetch(
+      `https://api.spotify.com/v1/users/${userID}/playlists`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          name: playlistTitle,
+          description: `Your custom MyList with genres: ${playlistGenres.join(
+            ", "
+          )}`,
+          public: false,
+        }),
+      }
+    );
+    var { id } = await result.json();
+    var playlistID = id;
+
+    console.log("Playlist has been created");
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to create playlist");
+    return;
+  }
+
+  try {
+    refreshToken();
+    console.log(songIDS);
+    const result = await fetch(
+      `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: JSON.stringify({
+          uris: songIDS,
+        }),
+      }
+    );
+    console.log("Songs added...");
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to add messages to playlist");
     return;
   }
 }
