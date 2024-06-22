@@ -238,6 +238,30 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
     console.log("Failed to add messages to playlist");
     return;
   }
+
+  try {
+    var encodedImage;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", imagePath, true);
+    xhr.responseType = "blob";
+    xhr.onload = function (e) {
+      encodedImage = this.response;
+      var reader = new FileReader();
+      reader.onload = function (event) {
+        var res = event.target.result;
+        encodedImage = res;
+        console.log(encodedImage);
+      };
+      var file = this.response;
+      reader.readAsDataURL(file);
+    };
+    xhr.send();
+    console.log(encodedImage);
+  } catch (e) {
+    console.log(e);
+    console.log("Failed encode image");
+    return;
+  }
 }
 
 export {

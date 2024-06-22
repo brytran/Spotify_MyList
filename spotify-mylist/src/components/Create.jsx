@@ -12,13 +12,10 @@ function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
   const [index, setIndex] = useState(0);
   const [otherIndex, setOtherIndex] = useState(0);
-  const [trueIndex, setTrueIndex] = useState(0);
   const [tracker, setTracker] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [itemList, setItemList] = useState([]);
-  const [albumTitle, setTitle] = useState("");
-  const [selectedImage, setImage] = useState("");
 
   const backwardButton = useRef(null);
   const forwardButton = useRef(null);
@@ -38,7 +35,11 @@ function Create() {
     };
 
     fetchGenres();
-  }, []);
+  }, [image1, image2]);
+
+  const getImagePath = () => {
+    return document.querySelector(".active").src;
+  };
 
   const handleSelect = (item) => {
     if (selectedItems.length < 5 && !selectedItems.includes(item)) {
@@ -84,7 +85,7 @@ function Create() {
               ></img>
               <img
                 src={albumImage[otherIndex]}
-                className="album-image"
+                className="active album-image"
                 ref={image2}
               ></img>
             </div>
@@ -113,6 +114,8 @@ function Create() {
                   setTracker(!tracker);
                   image1.current.classList.toggle("hidden");
                   image2.current.classList.toggle("hidden");
+                  image1.current.classList.toggle("active");
+                  image2.current.classList.toggle("active");
                 }}
               ></img>
               <img
@@ -138,6 +141,8 @@ function Create() {
 
                   image1.current.classList.toggle("hidden");
                   image2.current.classList.toggle("hidden");
+                  image1.current.classList.toggle("active");
+                  image2.current.classList.toggle("active");
                 }}
               ></img>
             </div>
@@ -197,14 +202,11 @@ function Create() {
         <a
           id="create-album"
           onClick={function () {
-            var imgPath;
-            if (tracker) {
-              imgPath = image1.current.src;
-            } else {
-              imgPath = image2.current.src;
-            }
-            console.log(imgPath);
-            generateAlbum(selectedItems, playlistTitle.current.value);
+            generateAlbum(
+              selectedItems,
+              playlistTitle.current.value,
+              getImagePath()
+            );
           }}
         >
           Create!
