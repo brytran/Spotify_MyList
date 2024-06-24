@@ -1,7 +1,6 @@
 //////////////////////////////////////////////////////////////////////
 //                             Encryption                           //
 //////////////////////////////////////////////////////////////////////
-
 const clientId = "2af4fbb025d541898fb163e490aeec27"; // Replace with your client ID
 const clientSecret = "b70414b150024d53bd68f8e2fece810f";
 const redirect_uri = "http://localhost:5173/callback";
@@ -235,7 +234,7 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
     console.log("Songs added...");
   } catch (e) {
     console.log(e);
-    console.log("Failed to add messages to playlist");
+    console.log("Failed to add songs to playlist");
     return;
   }
 
@@ -247,16 +246,35 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
     xhr.onload = function (e) {
       encodedImage = this.response;
       var reader = new FileReader();
-      reader.onload = function (event) {
+      reader.onload = async function (event) {
         var res = event.target.result;
         encodedImage = res;
+        encodedImage = encodedImage.split("data:image/png;base64,")[1];
         console.log(encodedImage);
+        try {
+          refreshToken();
+          const result = await fetch(
+            `https://api.spotify.com/v1/playlists/${playlistID}/images`,
+            {
+              method: "PUT",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "image/jpeg",
+              },
+              body: encodedImage,
+            }
+          );
+          console.log(result);
+          console.log("Image uploaded...");
+        } catch (e) {
+          console.log(e);
+          console.log("Image could not be uploaded");
+        }
       };
       var file = this.response;
       reader.readAsDataURL(file);
     };
     xhr.send();
-    console.log(encodedImage);
   } catch (e) {
     console.log(e);
     console.log("Failed encode image");
