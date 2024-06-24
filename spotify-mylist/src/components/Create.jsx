@@ -6,7 +6,8 @@ import logo5 from "../assets/logo5.png";
 import next from "../assets/next.png";
 import { useEffect, useState } from "react";
 import React, { useRef } from "react";
-
+import ReactDOM from "react-dom";
+import { getGenres, generateAlbum } from "../static/js/main";
 function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
   const [index, setIndex] = useState(0);
@@ -14,141 +15,31 @@ function Create() {
   const [tracker, setTracker] = useState(true);
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
+  const [itemList, setItemList] = useState([]);
 
   const backwardButton = useRef(null);
   const forwardButton = useRef(null);
   const searchBar = useRef(null);
-  const itemList = [
-    "acoustic",
-    "afrobeat",
-    "alt-rock",
-    "alternative",
-    "ambient",
-    "anime",
-    "black-metal",
-    "bluegrass",
-    "blues",
-    "bossanova",
-    "brazil",
-    "breakbeat",
-    "british",
-    "cantopop",
-    "chicago-house",
-    "children",
-    "chill",
-    "classical",
-    "club",
-    "comedy",
-    "country",
-    "dance",
-    "dancehall",
-    "death-metal",
-    "deep-house",
-    "detroit-techno",
-    "disco",
-    "disney",
-    "drum-and-bass",
-    "dub",
-    "dubstep",
-    "edm",
-    "electro",
-    "electronic",
-    "emo",
-    "folk",
-    "forro",
-    "french",
-    "funk",
-    "garage",
-    "german",
-    "gospel",
-    "goth",
-    "grindcore",
-    "groove",
-    "grunge",
-    "guitar",
-    "happy",
-    "hard-rock",
-    "hardcore",
-    "hardstyle",
-    "heavy-metal",
-    "hip-hop",
-    "holidays",
-    "honky-tonk",
-    "house",
-    "idm",
-    "indian",
-    "indie",
-    "indie-pop",
-    "industrial",
-    "iranian",
-    "j-dance",
-    "j-idol",
-    "j-pop",
-    "j-rock",
-    "jazz",
-    "k-pop",
-    "kids",
-    "latin",
-    "latino",
-    "malay",
-    "mandopop",
-    "metal",
-    "metal-misc",
-    "metalcore",
-    "minimal-techno",
-    "movies",
-    "mpb",
-    "new-age",
-    "new-release",
-    "opera",
-    "pagode",
-    "party",
-    "philippines-opm",
-    "piano",
-    "pop",
-    "pop-film",
-    "post-dubstep",
-    "power-pop",
-    "progressive-house",
-    "psych-rock",
-    "punk",
-    "punk-rock",
-    "r-n-b",
-    "rainy-day",
-    "reggae",
-    "reggaeton",
-    "road-trip",
-    "rock",
-    "rock-n-roll",
-    "rockabilly",
-    "romance",
-    "sad",
-    "salsa",
-    "samba",
-    "sertanejo",
-    "show-tunes",
-    "singer-songwriter",
-    "ska",
-    "sleep",
-    "songwriter",
-    "soul",
-    "soundtracks",
-    "spanish",
-    "study",
-    "summer",
-    "swedish",
-    "synth-pop",
-    "tango",
-    "techno",
-    "trance",
-    "trip-hop",
-    "turkish",
-    "work-out",
-    "world-music",
-  ];
+  const playlistTitle = React.createRef();
+  const generatePlaylist = React.createRef();
 
   const image1 = useRef(null);
   const image2 = useRef(null);
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const response = await getGenres();
+        setItemList(response.genres);
+      } catch {}
+    };
+
+    fetchGenres();
+  }, [image1, image2]);
+
+  const getImagePath = () => {
+    return document.querySelector(".active").src;
+  };
 
   const handleSelect = (item) => {
     if (selectedItems.length < 5 && !selectedItems.includes(item)) {
@@ -176,6 +67,7 @@ function Create() {
 
     setFilteredItems(filterItems);
   };
+
   return (
     <>
       <div className="create-title-container spotify-font">
@@ -193,7 +85,7 @@ function Create() {
               ></img>
               <img
                 src={albumImage[otherIndex]}
-                className="album-image"
+                className="active album-image"
                 ref={image2}
               ></img>
             </div>
@@ -222,6 +114,8 @@ function Create() {
                   setTracker(!tracker);
                   image1.current.classList.toggle("hidden");
                   image2.current.classList.toggle("hidden");
+                  image1.current.classList.toggle("active");
+                  image2.current.classList.toggle("active");
                 }}
               ></img>
               <img
@@ -243,21 +137,37 @@ function Create() {
                       setOtherIndex(index + 1);
                     }
                   }
-
                   setTracker(!tracker);
+
                   image1.current.classList.toggle("hidden");
                   image2.current.classList.toggle("hidden");
+                  image1.current.classList.toggle("active");
+                  image2.current.classList.toggle("active");
                 }}
               ></img>
             </div>
           </div>
         </div>
         <div className="add-container">
+          <div className="name-container">
+            <p className="spotify-font create-font">MyList Title:</p>
+            <input
+              type="text"
+              placeholder="Playlist Name:"
+              id="playlist-name"
+              ref={playlistTitle}
+            ></input>
+          </div>
           <div className="search-container">
+            <p className="spotify-font create-font">
+              Choose your genres: (Max 5)
+            </p>
+
             <input
               type="text"
               placeholder="Search genres:"
               onChange={(e) => handleSearch(e.target.value)}
+              id="genres"
             />
 
             {/* Display search results */}
@@ -284,11 +194,19 @@ function Create() {
         </div>
       </div>
 
-      <div className="spotify-font" id="create-album-container">
+      <div
+        className="spotify-font"
+        id="create-album-container"
+        ref={generatePlaylist}
+      >
         <a
           id="create-album"
           onClick={function () {
-            console.log(selectedItems);
+            generateAlbum(
+              selectedItems,
+              playlistTitle.current.value,
+              getImagePath()
+            );
           }}
         >
           Create!
