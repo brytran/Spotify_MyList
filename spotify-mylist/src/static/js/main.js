@@ -1,4 +1,10 @@
 //////////////////////////////////////////////////////////////////////
+//                        Event Listeners                           //
+//////////////////////////////////////////////////////////////////////
+const loginButton = document.querySelector("#login");
+const logoutButton = document.querySelector("#logout");
+
+//////////////////////////////////////////////////////////////////////
 //                             Encryption                           //
 //////////////////////////////////////////////////////////////////////
 const clientId = "2af4fbb025d541898fb163e490aeec27"; // Replace with your client ID
@@ -43,6 +49,7 @@ async function getAccessToken() {
   localStorage.setItem("access_token", access_token);
   localStorage.setItem("expires_at", expires);
   localStorage.setItem("refresh_token", refresh_token);
+  location.reload();
   return access_token;
 }
 
