@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import React, { useRef } from "react";
 import ReactDOM from "react-dom";
 import { getGenres, generateAlbum } from "../static/js/main";
+import { Navigate } from "react-router-dom";
+
 function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
   const [index, setIndex] = useState(0);
@@ -25,6 +27,16 @@ function Create() {
 
   const image1 = useRef(null);
   const image2 = useRef(null);
+
+  async function handleCreate() {
+    const uri = await generateAlbum(
+      selectedItems,
+      playlistTitle.current.value,
+      getImagePath()
+    );
+    console.log(uri);
+    return <Navigate to={"/embed"} state={{ uri }} />;
+  }
 
   useEffect(() => {
     const fetchGenres = async () => {
@@ -201,12 +213,8 @@ function Create() {
       >
         <a
           id="create-album"
-          onClick={function () {
-            generateAlbum(
-              selectedItems,
-              playlistTitle.current.value,
-              getImagePath()
-            );
+          onClick={async function () {
+            await handleCreate();
           }}
         >
           Create!
