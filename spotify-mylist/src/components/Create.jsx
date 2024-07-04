@@ -8,7 +8,8 @@ import { useEffect, useState } from "react";
 import React, { useRef } from "react";
 import ReactDOM from "react-dom";
 import { getGenres, generateAlbum } from "../static/js/main";
-import { Navigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { spotifyLogin } from "../static/js/main";
 
 function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
@@ -18,6 +19,7 @@ function Create() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [itemList, setItemList] = useState([]);
+  const [playlist_uri, setUri] = useState("");
 
   const backwardButton = useRef(null);
   const forwardButton = useRef(null);
@@ -35,10 +37,19 @@ function Create() {
       getImagePath()
     );
     console.log(uri);
-    return <Navigate to={"/embed"} state={{ uri }} />;
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      navigate("/embed", { state: { playlist_uri: uri } });
+    }, []);
+
+    //return <Navigate to={"/embed"} state={{ uri }} />;
   }
 
   useEffect(() => {
+    if (localStorage.getItem("access_token") == null) {
+      spotifyLogin();
+    }
     const fetchGenres = async () => {
       try {
         const response = await getGenres();

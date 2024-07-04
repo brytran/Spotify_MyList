@@ -26,8 +26,9 @@ function Navbar() {
     setloggedIn(false);
     if (location.href == homeRoute) {
       location.reload();
+    } else {
+      window.location = homeRoute;
     }
-    return <Navigate to="/" />;
   }
 
   useEffect(() => {
