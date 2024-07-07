@@ -1,13 +1,36 @@
 import msu from "../assets/msu-logo.png";
 import menu from "../assets/menu.png";
 import { useEffect } from "react";
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import { spotifyLogin } from "../static/js/main";
-import { redirect } from "react-router-dom";
+
+import { Navigate, useNavigate } from "react-router-dom";
 function Navbar() {
   const sideMenu = useRef(null);
   const menuButton = useRef(null);
   const loginButton = useRef(null);
+  const logoutButton = useRef(null);
+  const [loggedIn, setloggedIn] = useState(false);
+  const homeRoute = "http://localhost:5173/";
+
+  function handleLogin() {
+    setloggedIn(true);
+    spotifyLogin();
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("expires_at");
+    localStorage.removeItem("verifier");
+    setloggedIn(false);
+    if (location.href == homeRoute) {
+      location.reload();
+    } else {
+      window.location = homeRoute;
+    }
+  }
+
   useEffect(() => {
     if (sideMenu && sideMenu.current && menuButton && menuButton.current) {
       menuButton.current.addEventListener("click", (event) => {
@@ -15,9 +38,9 @@ function Navbar() {
       });
     }
 
-    loginButton.current.addEventListener("click", () => {
-      spotifyLogin();
-    });
+    if (localStorage.getItem("access_token") != null) {
+      setloggedIn(true);
+    }
   }, []);
 
   return (
@@ -48,11 +71,14 @@ function Navbar() {
           <a className="navbar-font link" id="devs" href="/developers">
             Developers
           </a>
-          <a className="navbar-font link" id="login" ref={loginButton}>
-            Login
-          </a>
-          <a className="navbar-font link" id="logout">
-            Logout
+
+          <a
+            className="navbar-font link"
+            id={loggedIn ? "logout" : "login"}
+            ref={loggedIn ? logoutButton : loginButton}
+            onClick={loggedIn ? handleLogout : handleLogin}
+          >
+            {loggedIn ? "Logout" : "Login"}
           </a>
         </div>
       </div>

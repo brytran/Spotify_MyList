@@ -8,6 +8,9 @@ import { useEffect, useState } from "react";
 import React, { useRef } from "react";
 import ReactDOM from "react-dom";
 import { getGenres, generateAlbum } from "../static/js/main";
+import { useNavigate, Navigate } from "react-router-dom";
+import { spotifyLogin } from "../static/js/main";
+
 function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
   const [index, setIndex] = useState(0);
@@ -16,6 +19,7 @@ function Create() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [itemList, setItemList] = useState([]);
+  const [playlist_uri, setUri] = useState("");
 
   const backwardButton = useRef(null);
   const forwardButton = useRef(null);
@@ -26,11 +30,28 @@ function Create() {
   const image1 = useRef(null);
   const image2 = useRef(null);
 
+  const navigate = useNavigate();
+
+  async function handleCreate() {
+    const uri = await generateAlbum(
+      selectedItems,
+      playlistTitle.current.value,
+      getImagePath()
+    );
+    console.log(uri);
+
+    navigate("/embed", { state: { playlist_uri: uri } });
+  }
+
   useEffect(() => {
+    if (localStorage.getItem("access_token") == null) {
+      spotifyLogin();
+    }
     const fetchGenres = async () => {
       try {
         const response = await getGenres();
         setItemList(response.genres);
+        setFilteredItems(response.genres);
       } catch {}
     };
 
@@ -51,18 +72,27 @@ function Create() {
     setSelectedItems((prevItems) =>
       prevItems.filter((prevItem) => prevItem !== item)
     );
-    setFilteredItems((prevItems) =>
-      prevItems.filter((prevItem) => prevItem !== item)
-    );
+    // setFilteredItems((prevItems) =>
+    //   prevItems.filter((prevItem) => prevItem !== item)
+    // );
   };
 
   const handleSearch = (query) => {
     // Filter items based on the query
-    let filterItems = itemList.filter((item) =>
-      item.toLowerCase().includes(query.toLowerCase())
-    );
-    if (!query) {
-      filterItems = selectedItems;
+
+    let filterItems;
+    if (searchBar.current.value != "") {
+      filterItems = itemList.filter(
+        (item) =>
+          item.toLowerCase().includes(query.toLowerCase()) &&
+          !selectedItems.includes(item)
+      );
+      if (!query) {
+        filterItems = selectedItems;
+      }
+      filterItems = selectedItems.concat(filterItems);
+    } else {
+      filterItems = itemList;
     }
 
     setFilteredItems(filterItems);
@@ -168,6 +198,7 @@ function Create() {
               placeholder="Search genres:"
               onChange={(e) => handleSearch(e.target.value)}
               id="genres"
+              ref={searchBar}
             />
 
             {/* Display search results */}
@@ -201,12 +232,8 @@ function Create() {
       >
         <a
           id="create-album"
-          onClick={function () {
-            generateAlbum(
-              selectedItems,
-              playlistTitle.current.value,
-              getImagePath()
-            );
+          onClick={async function () {
+            await handleCreate();
           }}
         >
           Create!

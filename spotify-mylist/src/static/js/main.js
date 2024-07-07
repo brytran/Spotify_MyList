@@ -1,4 +1,10 @@
 //////////////////////////////////////////////////////////////////////
+//                        Event Listeners                           //
+//////////////////////////////////////////////////////////////////////
+const loginButton = document.querySelector("#login");
+const logoutButton = document.querySelector("#logout");
+
+//////////////////////////////////////////////////////////////////////
 //                             Encryption                           //
 //////////////////////////////////////////////////////////////////////
 const clientId = "2af4fbb025d541898fb163e490aeec27"; // Replace with your client ID
@@ -43,6 +49,7 @@ async function getAccessToken() {
   localStorage.setItem("access_token", access_token);
   localStorage.setItem("expires_at", expires);
   localStorage.setItem("refresh_token", refresh_token);
+  location.reload();
   return access_token;
 }
 
@@ -170,11 +177,13 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   var genres = playlistGenres.join(",");
   var songIDS = [];
   var userID = await getUserID();
+  var playlistID;
+  var playlistURI;
   console.log(userID);
 
   try {
     const result = await fetch(
-      `https://api.spotify.com/v1/recommendations?min_popularity=70&seed_genres=${genres}&limit=30&market=US`,
+      `https://api.spotify.com/v1/recommendations?min_popularity=30&seed_genres=${genres}&limit=30&market=US`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -208,9 +217,9 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
         }),
       }
     );
-    var { id } = await result.json();
-    var playlistID = id;
-
+    var { id, uri } = await result.json();
+    playlistID = id;
+    playlistURI = uri;
     console.log("Playlist has been created");
   } catch (e) {
     console.log(e);
@@ -278,9 +287,14 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   } catch (e) {
     console.log(e);
     console.log("Failed encode image");
-    return;
   }
+  console.log("hit");
+  return playlistURI;
 }
+
+async function getTopTracks() {}
+
+async function getTopArtists() {}
 
 export {
   redirectToAuthCodeFlow,
@@ -288,4 +302,6 @@ export {
   spotifyLogin,
   getGenres,
   generateAlbum,
+  getTopTracks,
+  getTopArtists,
 };

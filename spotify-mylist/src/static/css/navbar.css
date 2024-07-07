@@ -64,7 +64,6 @@
 }
 
 #logout {
-  display: none;
 }
 
 .toggle-button {
@@ -116,4 +115,8 @@
 
 .toggleMenuOn {
   left: 0;
+}
+
+.nullDisplay {
+  display: none;
 }
