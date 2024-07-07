@@ -28,7 +28,11 @@ function Embed(props) {
   if (typeof uri === "undefined") {
     return (
       <>
-        <p className="spotify-font">error</p>
+        <div className="embed-container">
+          <p className="spotify-font" id="home-title-font">
+            error
+          </p>
+        </div>
       </>
     );
   } else {

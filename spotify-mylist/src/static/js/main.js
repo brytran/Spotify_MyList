@@ -183,7 +183,7 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
 
   try {
     const result = await fetch(
-      `https://api.spotify.com/v1/recommendations?min_popularity=70&seed_genres=${genres}&limit=30&market=US`,
+      `https://api.spotify.com/v1/recommendations?min_popularity=30&seed_genres=${genres}&limit=30&market=US`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -292,10 +292,16 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   return playlistURI;
 }
 
+async function getTopTracks() {}
+
+async function getTopArtists() {}
+
 export {
   redirectToAuthCodeFlow,
   getAccessToken,
   spotifyLogin,
   getGenres,
   generateAlbum,
+  getTopTracks,
+  getTopArtists,
 };

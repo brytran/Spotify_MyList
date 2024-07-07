@@ -82,12 +82,15 @@ function Create() {
 
     let filterItems;
     if (searchBar.current.value != "") {
-      filterItems = itemList.filter((item) =>
-        item.toLowerCase().includes(query.toLowerCase())
+      filterItems = itemList.filter(
+        (item) =>
+          item.toLowerCase().includes(query.toLowerCase()) &&
+          !selectedItems.includes(item)
       );
       if (!query) {
         filterItems = selectedItems;
       }
+      filterItems = selectedItems.concat(filterItems);
     } else {
       filterItems = itemList;
     }
