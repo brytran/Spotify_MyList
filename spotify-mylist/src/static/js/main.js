@@ -178,6 +178,7 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   var songIDS = [];
   var userID = await getUserID();
   var playlistID;
+  var playlistURI;
   console.log(userID);
 
   try {
@@ -216,9 +217,9 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
         }),
       }
     );
-    var { id } = await result.json();
+    var { id, uri } = await result.json();
     playlistID = id;
-
+    playlistURI = uri;
     console.log("Playlist has been created");
   } catch (e) {
     console.log(e);
@@ -288,7 +289,7 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
     console.log("Failed encode image");
   }
   console.log("hit");
-  return playlistID;
+  return playlistURI;
 }
 
 export {

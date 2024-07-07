@@ -30,6 +30,8 @@ function Create() {
   const image1 = useRef(null);
   const image2 = useRef(null);
 
+  const navigate = useNavigate();
+
   async function handleCreate() {
     const uri = await generateAlbum(
       selectedItems,
@@ -37,13 +39,8 @@ function Create() {
       getImagePath()
     );
     console.log(uri);
-    const navigate = useNavigate();
 
-    useEffect(() => {
-      navigate("/embed", { state: { playlist_uri: uri } });
-    }, []);
-
-    //return <Navigate to={"/embed"} state={{ uri }} />;
+    navigate("/embed", { state: { playlist_uri: uri } });
   }
 
   useEffect(() => {
@@ -54,6 +51,7 @@ function Create() {
       try {
         const response = await getGenres();
         setItemList(response.genres);
+        setFilteredItems(response.genres);
       } catch {}
     };
 
@@ -74,18 +72,24 @@ function Create() {
     setSelectedItems((prevItems) =>
       prevItems.filter((prevItem) => prevItem !== item)
     );
-    setFilteredItems((prevItems) =>
-      prevItems.filter((prevItem) => prevItem !== item)
-    );
+    // setFilteredItems((prevItems) =>
+    //   prevItems.filter((prevItem) => prevItem !== item)
+    // );
   };
 
   const handleSearch = (query) => {
     // Filter items based on the query
-    let filterItems = itemList.filter((item) =>
-      item.toLowerCase().includes(query.toLowerCase())
-    );
-    if (!query) {
-      filterItems = selectedItems;
+
+    let filterItems;
+    if (searchBar.current.value != "") {
+      filterItems = itemList.filter((item) =>
+        item.toLowerCase().includes(query.toLowerCase())
+      );
+      if (!query) {
+        filterItems = selectedItems;
+      }
+    } else {
+      filterItems = itemList;
     }
 
     setFilteredItems(filterItems);
@@ -191,6 +195,7 @@ function Create() {
               placeholder="Search genres:"
               onChange={(e) => handleSearch(e.target.value)}
               id="genres"
+              ref={searchBar}
             />
 
             {/* Display search results */}

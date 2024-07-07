@@ -1,15 +1,65 @@
-import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import loading from "../assets/loading.png";
+function Embed(props) {
+  const [loadStatus, setStatus] = useState(false);
 
-function Embed({ playlist_uri }) {
-  useEffect(() => {}, []);
+  let location = useLocation();
+  const uri = location.state.playlist_uri;
+  const loadingObject = useRef(null);
 
-  console.log(playlist_uri);
+  useEffect(() => {
+    setTimeout(() => {
+      window.onSpotifyIframeApiReady = (IFrameAPI) => {
+        const element = document.getElementById("embed-iframe");
+        const options = {
+          uri: uri,
+          width: "100%",
+        };
+        const callback = (EmbedController) => {};
+        IFrameAPI.createController(element, options, callback);
+      };
+      setStatus(true);
+      loadingObject.current.classList.toggle("nullDisplay");
+    }, 5000);
+  }, []);
+  console.log(uri);
 
-  if (typeof playlist_uri === "undefined") {
-    return <Navigate to={"/create"}></Navigate>;
+  if (typeof uri === "undefined") {
+    return (
+      <>
+        <p className="spotify-font">error</p>
+      </>
+    );
   } else {
-    return <></>;
+    return (
+      <>
+        <div className="embed-container">
+          {loadStatus ? (
+            <p className="spotify-font embed-header" id="home-title-font">
+              Your custom MyList!
+            </p>
+          ) : (
+            <p className="spotify-font embed-header" id="home-title-font">
+              Loading...
+            </p>
+          )}
+          <div id="embed-iframe"></div>
+          <div className="loading-container">
+            <img
+              className="loading rotating"
+              src={loading}
+              ref={loadingObject}
+            />
+          </div>
+        </div>
+        <div className="start-button-container">
+          <a className="spotify-font" id="start" href="/">
+            Go home
+          </a>
+        </div>
+      </>
+    );
   }
 }
 
