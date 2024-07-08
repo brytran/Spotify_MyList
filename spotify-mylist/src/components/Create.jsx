@@ -8,8 +8,7 @@ import { useEffect, useState } from "react";
 import React, { useRef } from "react";
 import ReactDOM from "react-dom";
 import { getGenres, generateAlbum } from "../static/js/main";
-import { useNavigate, Navigate } from "react-router-dom";
-import { spotifyLogin } from "../static/js/main";
+import { Navigate } from "react-router-dom";
 
 function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
@@ -19,7 +18,6 @@ function Create() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [itemList, setItemList] = useState([]);
-  const [playlist_uri, setUri] = useState("");
 
   const backwardButton = useRef(null);
   const forwardButton = useRef(null);
@@ -30,8 +28,6 @@ function Create() {
   const image1 = useRef(null);
   const image2 = useRef(null);
 
-  const navigate = useNavigate();
-
   async function handleCreate() {
     const uri = await generateAlbum(
       selectedItems,
@@ -39,19 +35,14 @@ function Create() {
       getImagePath()
     );
     console.log(uri);
-
-    navigate("/embed", { state: { playlist_uri: uri } });
+    return <Navigate to={"/embed"} state={{ uri }} />;
   }
 
   useEffect(() => {
-    if (localStorage.getItem("access_token") == null) {
-      spotifyLogin();
-    }
     const fetchGenres = async () => {
       try {
         const response = await getGenres();
         setItemList(response.genres);
-        setFilteredItems(response.genres);
       } catch {}
     };
 
@@ -72,30 +63,26 @@ function Create() {
     setSelectedItems((prevItems) =>
       prevItems.filter((prevItem) => prevItem !== item)
     );
-    // setFilteredItems((prevItems) =>
-    //   prevItems.filter((prevItem) => prevItem !== item)
-    // );
+    setFilteredItems((prevItems) =>
+      prevItems.filter((prevItem) => prevItem !== item)
+    );
   };
 
   const handleSearch = (query) => {
     // Filter items based on the query
-
-    let filterItems;
-    if (searchBar.current.value != "") {
-      filterItems = itemList.filter(
-        (item) =>
-          item.toLowerCase().includes(query.toLowerCase()) &&
-          !selectedItems.includes(item)
+    try {
+      let filterItems = itemList.filter((item) =>
+        item.toLowerCase().includes(query.toLowerCase())
       );
       if (!query) {
         filterItems = selectedItems;
       }
-      filterItems = selectedItems.concat(filterItems);
-    } else {
-      filterItems = itemList;
-    }
 
-    setFilteredItems(filterItems);
+      setFilteredItems(filterItems);
+    } catch (e) {
+      console.log(e);
+      location.reload();
+    }
   };
 
   return (
@@ -198,7 +185,6 @@ function Create() {
               placeholder="Search genres:"
               onChange={(e) => handleSearch(e.target.value)}
               id="genres"
-              ref={searchBar}
             />
 
             {/* Display search results */}
