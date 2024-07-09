@@ -305,7 +305,7 @@ async function getTopTracks() {
     );
     var { items } = await result.json();
     console.log("Tracks retrieved...");
-
+    console.log(items);
     return items;
   } catch (e) {
     console.log(e);
