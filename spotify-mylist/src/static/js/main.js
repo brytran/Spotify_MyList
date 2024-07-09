@@ -305,7 +305,6 @@ async function getTopTracks() {
     );
     var { items } = await result.json();
     console.log("Tracks retrieved...");
-    console.log(items);
 
     return items;
   } catch (e) {
@@ -328,7 +327,6 @@ async function getTopArtists() {
     );
     var { items } = await result.json();
     console.log("Artists retrieved...");
-    console.log(items);
 
     return items;
   } catch (e) {
