@@ -34,7 +34,7 @@ function Stats() {
             <tr>
               <td>{index + 1}</td>
               <td>
-                <img src={item.album.images[0].url} />
+                <img src={item.album.images[2].url} />
               </td>
               <td>{item.name}</td>
               <td>{item.artists[0].name}</td>
