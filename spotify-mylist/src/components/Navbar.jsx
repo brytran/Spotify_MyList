@@ -65,7 +65,7 @@ function Navbar() {
           <a className="navbar-font link" id="create-playlist" href="/create">
             Create playlist
           </a>
-          <a className="navbar-font link" id="stats" href="/stats">
+          <a className="navbar-font link" id="stats" href="/statsselect">
             Your stats
           </a>
           <a className="navbar-font link" id="devs" href="/developers">

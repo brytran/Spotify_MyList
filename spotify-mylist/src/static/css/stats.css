@@ -37,7 +37,7 @@
 
 .stats-container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto;
 }
 
 .stat-image {
@@ -79,16 +79,6 @@
   box-shadow: 0 0 1.25rem 0.5rem #cd7f32;
 }
 
-@media (max-width: 1300px) {
-  .stats-container {
-    grid-template-columns: auto;
-  }
-
-  .artists-container {
-    padding-top: 5rem;
-  }
-}
-
 @media (max-width: 650px) {
   .tracks-chart-container {
     width: 20rem;
@@ -101,5 +91,19 @@
   }
   .artists-podium-container {
     width: 22rem;
+  }
+
+  .Podium1 {
+    width: 8rem;
+    top: 18%;
+    left: 33%;
+  }
+  .Podium2 {
+    width: 5.3rem;
+    top: 41%;
+  }
+  .Podium3 {
+    width: 5rem;
+    top: 44%;
   }
 }
