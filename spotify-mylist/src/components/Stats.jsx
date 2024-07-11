@@ -73,15 +73,15 @@ function Stats() {
           <div className="artists-podium-container">
             <img src={podium} className="podium-image" />
             <img
-              className="onePodium winner"
+              className="onePodium winner winningArtists"
               src={winningArtists[0].images[1].url}
             />
             <img
-              className="twoPodium winner"
+              className="twoPodium winner winningArtists"
               src={winningArtists[1].images[1].url}
             />
             <img
-              className="threePodium winner"
+              className="threePodium winner winningArtists"
               src={winningArtists[2].images[1].url}
             />
           </div>
