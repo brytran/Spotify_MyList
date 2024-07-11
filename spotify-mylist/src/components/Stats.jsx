@@ -8,6 +8,8 @@ function Stats() {
   const [winningTracks, setWinningTracks] = useState([]);
   const [winningArtists, setWinningArtists] = useState([]);
 
+  //TODO: Reconfigure to use different time scales, title text that explains page, add to homepage to redirect to stats, image api call fix
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -32,7 +34,7 @@ function Stats() {
           <div className="tracks-podium-container">
             <img src={podium} className="podium-image" />
             {winningTracks.map((item, index) => (
-              <img className={"Podium" + (index+1) + " winner"} src={item.album.images[0].url} />
+              <a href={item.external_urls.spotify}><img className={"Podium" + (index+1) + " winner"} src={item.album.images[0].url} /></a>
             ))}
           </div>
           <div className="tracks-chart-container">
@@ -50,7 +52,7 @@ function Stats() {
                   <tr key={index + 1}>
                     <td>{index + 1}</td>
                     <td>
-                      <img class="stat-image" src={item.album.images[2].url} />
+                    <a href={item.external_urls.spotify}><img class="stat-image" src={item.album.images[2].url} /></a>
                     </td>
                     <td>{item.name}</td>
                     <td>{item.artists[0].name}</td>
@@ -64,7 +66,7 @@ function Stats() {
           <div className="artists-podium-container">
             <img src={podium} className="podium-image" />
             {winningArtists.map((item, index) => (
-              <img className={"Podium" + (index+1) + " winner"} src={item.images[0].url} />
+              <a href={item.external_urls.spotify}><img className={"Podium" + (index+1) + " winner"} src={item.images[0].url} /></a>
             ))}
           </div>
           <div className="artists-chart-container">
@@ -81,7 +83,7 @@ function Stats() {
                   <tr key={index + 1}>
                     <td>{index + 1}</td>
                     <td>
-                      <img class="stat-image" src={item.images[2].url} />
+                    <a href={item.external_urls.spotify}><img class="stat-image" src={item.images[2].url} /></a>
                     </td>
                     <td>{item.name}</td>
                   </tr>
