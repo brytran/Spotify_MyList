@@ -9,6 +9,7 @@ function Embed(props) {
   const loadingObject = useRef(null);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {
       window.onSpotifyIframeApiReady = (IFrameAPI) => {
         const element = document.getElementById("embed-iframe");

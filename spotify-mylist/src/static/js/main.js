@@ -327,6 +327,7 @@ async function getTopArtists() {
     );
     var { items } = await result.json();
     console.log("Artists retrieved...");
+    console.log(items);
 
     return items;
   } catch (e) {

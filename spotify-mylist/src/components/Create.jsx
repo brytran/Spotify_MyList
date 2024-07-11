@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import React, { useRef } from "react";
 import ReactDOM from "react-dom";
 import { getGenres, generateAlbum } from "../static/js/main";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
@@ -28,6 +28,8 @@ function Create() {
   const image1 = useRef(null);
   const image2 = useRef(null);
 
+  const navigate = useNavigate();
+
   async function handleCreate() {
     const uri = await generateAlbum(
       selectedItems,
@@ -35,7 +37,7 @@ function Create() {
       getImagePath()
     );
     console.log(uri);
-    return <Navigate to={"/embed"} state={{ uri }} />;
+    navigate("/embed", { state: { playlist_uri: uri } });
   }
 
   useEffect(() => {
@@ -43,6 +45,7 @@ function Create() {
       try {
         const response = await getGenres();
         setItemList(response.genres);
+        setFilteredItems(response.genres);
       } catch {}
     };
 
@@ -63,28 +66,33 @@ function Create() {
     setSelectedItems((prevItems) =>
       prevItems.filter((prevItem) => prevItem !== item)
     );
-    setFilteredItems((prevItems) =>
-      prevItems.filter((prevItem) => prevItem !== item)
-    );
   };
 
   const handleSearch = (query) => {
     // Filter items based on the query
-    try {
-      let filterItems = itemList.filter((item) =>
-        item.toLowerCase().includes(query.toLowerCase())
+
+    let filterItems;
+    if (searchBar.current.value != "") {
+      filterItems = itemList.filter(
+        (item) =>
+          item.toLowerCase().includes(query.toLowerCase()) &&
+          !selectedItems.includes(item)
       );
       if (!query) {
         filterItems = selectedItems;
       }
-
-      setFilteredItems(filterItems);
-    } catch (e) {
-      console.log(e);
-      location.reload();
+      filterItems = selectedItems.concat(filterItems);
+      console.log(filterItems);
+    } else {
+      console.log("hit");
+      filterItems = selectedItems;
+      var temp = itemList.filter((item) => !filterItems.includes(item));
+      console.log(temp);
+      filterItems = filterItems.concat(temp);
     }
-  };
 
+    setFilteredItems(filterItems);
+  };
   return (
     <>
       <div className="create-title-container spotify-font">
@@ -185,6 +193,7 @@ function Create() {
               placeholder="Search genres:"
               onChange={(e) => handleSearch(e.target.value)}
               id="genres"
+              ref={searchBar}
             />
 
             {/* Display search results */}
