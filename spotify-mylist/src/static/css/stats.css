@@ -44,19 +44,19 @@
   width: 3rem;
 }
 
-.onePodium {
+.Podium1 {
   top: -3%;
   left: 35%;
   width: 12rem;
 }
 
-.twoPodium {
+.Podium2 {
   top: 23%;
   left: 4%;
   width: 8.5rem;
 }
 
-.threePodium {
+.Podium3 {
   top: 27%;
   left: 74%;
   width: 8rem;
@@ -68,14 +68,14 @@
   position: absolute;
 }
 
-.onePodium:hover {
+.Podium1:hover {
   box-shadow: 0 0 1.25rem 0.5rem #f0d331;
 }
 
-.twoPodium:hover {
+.Podium2:hover {
   box-shadow: 0 0 1.25rem 0.5rem #555555;
 }
-.threePodium:hover {
+.Podium3:hover {
   box-shadow: 0 0 1.25rem 0.5rem #cd7f32;
 }
 

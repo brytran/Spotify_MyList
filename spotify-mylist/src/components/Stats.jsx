@@ -31,18 +31,9 @@ function Stats() {
         <div className="tracks-container">
           <div className="tracks-podium-container">
             <img src={podium} className="podium-image" />
-            <img
-              className="onePodium winner"
-              src={winningTracks[0].album.images[1].url}
-            />
-            <img
-              className="twoPodium winner"
-              src={winningTracks[1].album.images[1].url}
-            />
-            <img
-              className="threePodium winner"
-              src={winningTracks[2].album.images[1].url}
-            />
+            {winningTracks.map((item, index) => (
+              <img className={"Podium" + (index+1) + " winner"} src={item.album.images[0].url} />
+            ))}
           </div>
           <div className="tracks-chart-container">
             <table class="table table-traits table-dark">
@@ -72,18 +63,9 @@ function Stats() {
         <div className="artists-container">
           <div className="artists-podium-container">
             <img src={podium} className="podium-image" />
-            <img
-              className="onePodium winner winningArtists"
-              src={winningArtists[0].images[1].url}
-            />
-            <img
-              className="twoPodium winner winningArtists"
-              src={winningArtists[1].images[1].url}
-            />
-            <img
-              className="threePodium winner winningArtists"
-              src={winningArtists[2].images[1].url}
-            />
+            {winningArtists.map((item, index) => (
+              <img className={"Podium" + (index+1) + " winner"} src={item.images[0].url} />
+            ))}
           </div>
           <div className="artists-chart-container">
             <table class="table table-traits table-dark">
