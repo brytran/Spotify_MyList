@@ -102,7 +102,7 @@ async function redirectToAuthCodeFlow(clientId) {
   params.append("redirect_uri", redirect_uri);
   params.append(
     "scope",
-    "playlist-modify-public playlist-modify-private user-read-private user-read-email ugc-image-upload"
+    "playlist-modify-public playlist-modify-private user-read-private user-read-email ugc-image-upload user-top-read"
   );
   params.append("code_challenge_method", "S256");
   params.append("code_challenge", challenge);
@@ -172,7 +172,7 @@ async function getUserID() {
 }
 
 async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
-  refreshToken();
+  await refreshToken();
   var token = localStorage.getItem("access_token");
   var genres = playlistGenres.join(",");
   var songIDS = [];
@@ -292,9 +292,49 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   return playlistURI;
 }
 
-async function getTopTracks() {}
+async function getTopTracks() {
+  await refreshToken();
+  var token = localStorage.getItem("access_token");
+  try {
+    const result = await fetch(
+      "https://api.spotify.com/v1/me/top/tracks?limit=10",
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    var { items } = await result.json();
+    console.log("Tracks retrieved...");
+    console.log(items);
+    return items;
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to retreive top tracks...");
+  }
+}
 
-async function getTopArtists() {}
+async function getTopArtists() {
+  await refreshToken();
+  var token = localStorage.getItem("access_token");
+
+  try {
+    const result = await fetch(
+      "https://api.spotify.com/v1/me/top/artists?limit=10",
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    var { items } = await result.json();
+    console.log("Artists retrieved...");
+    console.log(items);
+
+    return items;
+  } catch (e) {
+    console.log(e);
+    console.log("Failed to retreive top artists...");
+  }
+}
 
 export {
   redirectToAuthCodeFlow,

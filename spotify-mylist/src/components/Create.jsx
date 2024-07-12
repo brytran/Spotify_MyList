@@ -8,8 +8,7 @@ import { useEffect, useState } from "react";
 import React, { useRef } from "react";
 import ReactDOM from "react-dom";
 import { getGenres, generateAlbum } from "../static/js/main";
-import { useNavigate, Navigate } from "react-router-dom";
-import { spotifyLogin } from "../static/js/main";
+import { useNavigate } from "react-router-dom";
 
 function Create() {
   const albumImage = [logo1, logo2, logo3, logo4, logo5];
@@ -19,7 +18,6 @@ function Create() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [itemList, setItemList] = useState([]);
-  const [playlist_uri, setUri] = useState("");
 
   const backwardButton = useRef(null);
   const forwardButton = useRef(null);
@@ -39,14 +37,10 @@ function Create() {
       getImagePath()
     );
     console.log(uri);
-
     navigate("/embed", { state: { playlist_uri: uri } });
   }
 
   useEffect(() => {
-    if (localStorage.getItem("access_token") == null) {
-      spotifyLogin();
-    }
     const fetchGenres = async () => {
       try {
         const response = await getGenres();
@@ -72,9 +66,6 @@ function Create() {
     setSelectedItems((prevItems) =>
       prevItems.filter((prevItem) => prevItem !== item)
     );
-    // setFilteredItems((prevItems) =>
-    //   prevItems.filter((prevItem) => prevItem !== item)
-    // );
   };
 
   const handleSearch = (query) => {
@@ -91,13 +82,17 @@ function Create() {
         filterItems = selectedItems;
       }
       filterItems = selectedItems.concat(filterItems);
+      console.log(filterItems);
     } else {
-      filterItems = itemList;
+      console.log("hit");
+      filterItems = selectedItems;
+      var temp = itemList.filter((item) => !filterItems.includes(item));
+      console.log(temp);
+      filterItems = filterItems.concat(temp);
     }
 
     setFilteredItems(filterItems);
   };
-
   return (
     <>
       <div className="create-title-container spotify-font">

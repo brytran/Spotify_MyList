@@ -5,9 +5,13 @@
 .instruction-card {
   background-color: #2a2a2a;
   width: 14rem;
-  height: 21rem;
+  height: 18rem;
   margin: 0 1rem 1rem 1rem;
   border-radius: 15px;
+}
+
+.instruction-text-container {
+  margin-top: 10px;
 }
 
 @media (max-width: 660px) {

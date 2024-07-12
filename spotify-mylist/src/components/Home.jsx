@@ -17,7 +17,7 @@ function Home() {
     <>
       <div className="welcome-container">
         <p id="home-title-font" className="spotify-font">
-          Spotify MyList
+          Create your playlist
         </p>
         <p id="sub-title-font" className="spotify-font">
           Discover music you've never seen!
@@ -49,6 +49,20 @@ function Home() {
       <div className="start-button-container">
         <a className="spotify-font" id="start" href="/create">
           Get Started!
+        </a>
+      </div>
+
+      <div className="welcome-container">
+        <p id="home-title-font" className="spotify-font">
+          See your stats
+        </p>
+        <p id="sub-title-font" className="spotify-font">
+          Compare with your friends!
+        </p>
+      </div>
+      <div className="start-button-container" id="stats">
+        <a className="spotify-font" href="/statsselect">
+          Let's Go!
         </a>
       </div>
     </>
