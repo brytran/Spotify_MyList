@@ -1,0 +1,109 @@
+.tracks-chart-container {
+  margin: 0 auto 0 auto;
+  width: 35rem;
+}
+.artists-chart-container {
+  margin: 0 auto 0 auto;
+  width: 35rem;
+}
+
+.table-dark {
+  --bs-table-bg: #2a2a2a !important;
+}
+
+.table-traits {
+  max-width: 700px;
+  margin: 0 auto 0 auto;
+}
+
+.podium-image {
+  width: 100%;
+  max-width: 700px;
+}
+
+.tracks-podium-container {
+  margin: 0 auto 0 auto;
+  position: relative;
+  padding-top: 10rem;
+  width: 37rem;
+}
+
+.artists-podium-container {
+  margin: 0 auto 0 auto;
+  position: relative;
+  padding-top: 10rem;
+  width: 37rem;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.stat-image {
+  width: 3rem;
+}
+
+.Podium1 {
+  top: -3%;
+  left: 35%;
+  width: 12rem;
+}
+
+.Podium2 {
+  top: 23%;
+  left: 4%;
+  width: 8.5rem;
+}
+
+.Podium3 {
+  top: 27%;
+  left: 74%;
+  width: 8rem;
+}
+
+.winner {
+  transition: box-shadow 1s;
+  z-index: 1;
+  position: absolute;
+}
+
+.Podium1:hover {
+  box-shadow: 0 0 1.25rem 0.5rem #f0d331;
+}
+
+.Podium2:hover {
+  box-shadow: 0 0 1.25rem 0.5rem #555555;
+}
+.Podium3:hover {
+  box-shadow: 0 0 1.25rem 0.5rem #cd7f32;
+}
+
+@media (max-width: 650px) {
+  .tracks-chart-container {
+    width: 20rem;
+  }
+  .tracks-podium-container {
+    width: 22rem;
+  }
+  .artists-chart-container {
+    width: 20rem;
+  }
+  .artists-podium-container {
+    width: 22rem;
+  }
+
+  .Podium1 {
+    width: 8rem;
+    top: 18%;
+    left: 33%;
+  }
+  .Podium2 {
+    width: 5.3rem;
+    top: 41%;
+  }
+  .Podium3 {
+    width: 5rem;
+    top: 44%;
+  }
+}

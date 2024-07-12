@@ -1,0 +1,49 @@
+.stat-card-container {
+  height: 18rem;
+  width: 12rem;
+  border-radius: 0.25rem;
+  margin: 0 5px 0 5px;
+}
+
+.stat-card-container:hover {
+  background-color: #293330;
+}
+.stat-card-image {
+  width: 10rem;
+  height: 10rem;
+  border-radius: 0.25rem;
+  margin: 0 auto 0 auto;
+}
+
+.stat-card-image-container {
+  padding-top: 1rem;
+}
+
+.stat-image-font {
+  font-size: 1.25rem;
+  margin: 0 auto 0 5%;
+  font-weight: bold;
+  padding-left: 0.5rem;
+}
+
+.duration-font {
+  opacity: 0.8;
+}
+
+.top-font {
+  padding-top: 1rem;
+}
+
+.stat-description {
+  width: 80%;
+  font-size: 0.9rem;
+  color: #bbbbbb;
+  text-align: left;
+}
+
+.stat-description-header-font {
+  padding-top: 0.5rem;
+  text-align: left;
+  width: 80%;
+  font-weight: bold;
+}
