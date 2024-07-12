@@ -3,9 +3,10 @@ function StatCard(props) {
   const description = props.description;
   const color = props.color;
   const type = props.type;
+  const reference = props.reference;
   return (
     <>
-      <div className="stat-card-container">
+      <div className="stat-card-container" ref={reference}>
         <div className="stat-card-image-container">
           <div className="stat-card-image" style={{ backgroundColor: color }}>
             <p className="spotify-font stat-image-font top-font">Top</p>

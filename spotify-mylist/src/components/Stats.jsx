@@ -7,9 +7,13 @@ function Stats(props) {
   let location = useLocation();
   const type = location.state.type;
   const duration = location.state.duration;
+  const color1 = location.state.grad1;
+  const color2 = location.state.grad2;
+  const color3 = location.state.grad3;
   const [winningItems, setWinningItems] = useState([]);
   const [topItems, setTopItems] = useState([]);
-
+  const [style1, setStyle1] = useState("");
+  const [style2, setStyle2] = useState("");
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -26,13 +30,30 @@ function Stats(props) {
     };
 
     fetchStats();
+
+    setStyle1({
+      background: "linear-gradient(" + color1 + "," + color2 + ")",
+    });
+    setStyle2({
+      background: "linear-gradient(" + color3 + "," + "#000000)",
+    });
   }, []);
 
   return (
     <>
-      <div className="stats-container">
-        <Podium topItems={winningItems}></Podium>
-        <Chart chartItems={topItems}></Chart>
+      <div
+        className="selection-container charts-header"
+        style={{ background: "linear-gradient(" + color1 + "," + color2 + ")" }}
+      ></div>
+      <div
+        className="gradient-container"
+        id="chart-gradient"
+        style={{ background: "linear-gradient(" + color3 + "," + "#000000)" }}
+      >
+        <div className="stats-container">
+          <Podium topItems={winningItems}></Podium>
+          <Chart chartItems={topItems}></Chart>
+        </div>
       </div>
     </>
   );

@@ -79,6 +79,21 @@
   box-shadow: 0 0 1.25rem 0.5rem #cd7f32;
 }
 
+.charts-header {
+  height: 10rem;
+  width: 100vw;
+}
+
+#chart-gradient {
+  height: 100vh;
+}
+
+@media (min-height: 1100px) {
+  #chart-gradient {
+    height: 110vh;
+  }
+}
+
 @media (max-width: 650px) {
   .tracks-chart-container {
     width: 20rem;
