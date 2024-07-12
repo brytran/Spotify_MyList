@@ -7,10 +7,6 @@ function Stats(props) {
   let location = useLocation();
   const type = location.state.type;
   const duration = location.state.duration;
-  const [topArtists, setArtists] = useState([]);
-  const [topTracks, setTracks] = useState([]);
-  const [winningTracks, setWinningTracks] = useState([]);
-  const [winningArtists, setWinningArtists] = useState([]);
   const [winningItems, setWinningItems] = useState([]);
   const [topItems, setTopItems] = useState([]);
 
