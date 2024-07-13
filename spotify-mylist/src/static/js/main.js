@@ -292,19 +292,19 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   return playlistURI;
 }
 
-async function getTopTracks() {
+async function getTopTracks(timeRange="medium_term") {
   await refreshToken();
   var token = localStorage.getItem("access_token");
   try {
     const result = await fetch(
-      "https://api.spotify.com/v1/me/top/tracks?limit=10",
+      `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=10`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       }
     );
     var { items } = await result.json();
-    console.log("Tracks retrieved...");
+    console.log(timeRange + " Tracks retrieved...");
     console.log(items);
     return items;
   } catch (e) {
@@ -313,20 +313,20 @@ async function getTopTracks() {
   }
 }
 
-async function getTopArtists() {
+async function getTopArtists(timeRange="medium_term") {
   await refreshToken();
   var token = localStorage.getItem("access_token");
 
   try {
     const result = await fetch(
-      "https://api.spotify.com/v1/me/top/artists?limit=10",
+      `https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}&limit=10`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       }
     );
     var { items } = await result.json();
-    console.log("Artists retrieved...");
+    console.log(timeRange + " Artists retrieved...");
     console.log(items);
 
     return items;

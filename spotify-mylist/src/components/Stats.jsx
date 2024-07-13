@@ -16,15 +16,21 @@ function Stats(props) {
   const [style2, setStyle2] = useState("");
   const navigate = useNavigate();
 
+  const timeRange = {
+    "Monthly": "short_term",
+    "Semi-Annual": "medium_term",
+    "Annual": "long_term"
+  } 
+
   useEffect(() => {
     const fetchStats = async () => {
       try {
         if (type == "artists") {
-          const data = await getTopArtists();
+          const data = await getTopArtists(timeRange[duration]);
           setTopItems(data);
           setWinningItems(data.slice(0, 3));
         } else {
-          const data = await getTopTracks();
+          const data = await getTopTracks(timeRange[duration]);
           setTopItems(data);
           setWinningItems(data.slice(0, 3));
         }
@@ -72,7 +78,7 @@ function Stats(props) {
           </p>
           <p className="spotify-font header-font-align charts-subfont">
             {type == "artists"
-              ? "Artists you've had on repeat -" + duration
+              ? "Artists you've had on repeat - " + duration
               : "Song you've had on repeat -" + " " + duration}
           </p>
           <div className="spotify-font header-font-align charts-subfont">
@@ -83,7 +89,7 @@ function Stats(props) {
             >
               Top Hits
             </a>
-            {" - 30 Entires"}
+            {" - 10 Entires"}
           </div>
           <div
             className="spotify-font"
