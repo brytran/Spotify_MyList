@@ -46,12 +46,13 @@ function Stats(props) {
         style={{ background: "linear-gradient(" + color1 + "," + color2 + ")" }}
       ></div>
       <div
-        className="gradient-container"
-        id="chart-gradient"
-        style={{ background: "linear-gradient(" + color3 + "," + "#000000)" }}
+        className="podium-gradient"
+        style={{ background: "linear-gradient(" + color3 + "," + "#111312)" }}
       >
+        <Podium topItems={winningItems}></Podium>
+      </div>
+      <div className="gradient-container">
         <div className="stats-container">
-          <Podium topItems={winningItems}></Podium>
           <Chart chartItems={topItems}></Chart>
         </div>
       </div>

@@ -79,7 +79,7 @@ function StatsSelection(duration, type, grad1, grad2) {
           />
         </div>
       </div>
-      <div className="gradient-container">
+      <div className="gradient-container" id="chart-gradient">
         <p className="spotify-font sub-stat-header-font" id="artist-header">
           Top Artists
         </p>
