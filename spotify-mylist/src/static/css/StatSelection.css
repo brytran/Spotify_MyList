@@ -1,3 +1,7 @@
+#root {
+  height: 100vh;
+}
+
 .stat-header-container {
   height: 15rem;
   margin-top: -4.1rem;
