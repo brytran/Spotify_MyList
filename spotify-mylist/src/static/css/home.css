@@ -1,5 +1,6 @@
 .welcome-container {
   margin: 0 auto 0 auto;
+  height: 15rem;
 }
 
 .instructions-container {
@@ -54,10 +55,9 @@
   border-radius: 1.5rem;
 }
 
-.start-button-container #stats{
+.start-button-container #stats {
   width: 15rem;
 }
-
 
 .start-button-container:hover {
   box-shadow: 0 0 1rem 0.2rem #94e08a;

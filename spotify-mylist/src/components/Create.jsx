@@ -50,6 +50,9 @@ function Create() {
     };
 
     fetchGenres();
+    if (itemList == []) {
+      location.reload();
+    }
   }, [image1, image2]);
 
   const getImagePath = () => {
