@@ -30,19 +30,29 @@ function StatsSelection(duration, type, grad1, grad2) {
       });
     }
     if (midArtists && midArtists.current) {
-      midArtists.current.addEventListener("click", () => {});
+      midArtists.current.addEventListener("click", () => {
+        HandleSelection("artists", "Semi-Annual", "#5b77f5", "#4b62c9", "#32428f")
+      });
     }
     if (highArtists && highArtists.current) {
-      highArtists.current.addEventListener("click", () => {});
+      highArtists.current.addEventListener("click", () => {
+        HandleSelection("artists", "Annual", "#f55bd1", "#bf47a3", "#8f3278")
+      });
     }
-    if (lowArtists && lowArtists.current) {
-      lowTracks.current.addEventListener("click", () => {});
+    if (lowTracks && lowTracks.current) {
+      lowTracks.current.addEventListener("click", () => {
+        HandleSelection("tracks", "Monthly", "#c95957", "#ad4c4b", "#8c3d3c");
+      });
     }
     if (midTracks && midTracks.current) {
-      lowTracks.current.addEventListener("click", () => {});
+      midTracks.current.addEventListener("click", () => {
+        HandleSelection("tracks", "Semi-Annual", "#51afed", "#4493c7", "#2e688f");
+      });
     }
     if (highTracks && highTracks.current) {
-      lowTracks.current.addEventListener("click", () => {});
+      highTracks.current.addEventListener("click", () => {
+        HandleSelection("tracks", "Annual", "#a163f2", "#7f4ebf", "#603a91");
+      });
     }
   }, []);
 
@@ -79,7 +89,7 @@ function StatsSelection(duration, type, grad1, grad2) {
           />
         </div>
       </div>
-      <div className="gradient-container">
+      <div className="gradient-container" id="chart-gradient">
         <p className="spotify-font sub-stat-header-font" id="artist-header">
           Top Artists
         </p>

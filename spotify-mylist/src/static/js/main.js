@@ -1,3 +1,4 @@
+// require("dotenv").config();
 //////////////////////////////////////////////////////////////////////
 //                        Event Listeners                           //
 //////////////////////////////////////////////////////////////////////
@@ -9,6 +10,8 @@ const logoutButton = document.querySelector("#logout");
 //////////////////////////////////////////////////////////////////////
 const clientId = "2af4fbb025d541898fb163e490aeec27"; // Replace with your client ID
 const clientSecret = "b70414b150024d53bd68f8e2fece810f";
+// const clientId = process.env.CLIENT_ID;
+// const clientSecret = process.env.CLIENT_SECRET; // Replace with your client ID
 const redirect_uri = "http://localhost:5173/callback";
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
@@ -292,19 +295,19 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   return playlistURI;
 }
 
-async function getTopTracks() {
+async function getTopTracks(timeRange = "medium_term") {
   await refreshToken();
   var token = localStorage.getItem("access_token");
   try {
     const result = await fetch(
-      "https://api.spotify.com/v1/me/top/tracks?limit=10",
+      `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=10`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       }
     );
     var { items } = await result.json();
-    console.log("Tracks retrieved...");
+    console.log(timeRange + " Tracks retrieved...");
     console.log(items);
     return items;
   } catch (e) {
@@ -313,20 +316,20 @@ async function getTopTracks() {
   }
 }
 
-async function getTopArtists() {
+async function getTopArtists(timeRange = "medium_term") {
   await refreshToken();
   var token = localStorage.getItem("access_token");
 
   try {
     const result = await fetch(
-      "https://api.spotify.com/v1/me/top/artists?limit=10",
+      `https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}&limit=10`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       }
     );
     var { items } = await result.json();
-    console.log("Artists retrieved...");
+    console.log(timeRange + " Artists retrieved...");
     console.log(items);
 
     return items;

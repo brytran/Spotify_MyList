@@ -59,11 +59,11 @@ function Home() {
         <p id="sub-title-font" className="spotify-font">
           Compare with your friends!
         </p>
-      </div>
-      <div className="start-button-container" id="stats">
-        <a className="spotify-font" href="/statsselect">
-          Let's Go!
-        </a>
+        <div className="start-button-container" id="stats">
+          <a className="spotify-font" href="/statsselect">
+            Let's Go!
+          </a>
+        </div>
       </div>
     </>
   );

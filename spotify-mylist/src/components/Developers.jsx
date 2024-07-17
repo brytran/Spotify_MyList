@@ -12,6 +12,7 @@ function Developers() {
           <img className="profile-picture" src={Bryan} />
           <div className="dev-info">
             <p className="spotify-font name">Bryan Tran</p>
+            <p className="spotify-font">Lead Developer</p>
             <p className="spotify-font school">Michigan State University</p>
 
             <a
@@ -59,6 +60,8 @@ function Developers() {
           <img className="profile-picture" src={Ben} />
           <div className="dev-info">
             <p className="spotify-font name">Ben Crimmins</p>
+
+            <p className="spotify-font">Lead Developer</p>
             <p className="spotify-font school">Michigan State University</p>
 
             <a
@@ -71,6 +74,9 @@ function Developers() {
           </div>
         </div>
       </div>
+      <p className="disclaimer spotify-font">
+        *We are not affiliated with Spotify in anyway
+      </p>
     </>
   );
 }

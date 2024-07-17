@@ -1,4 +1,4 @@
-import msu from "../assets/msu-logo.png";
+import logo from "../assets/Favicon.png";
 import menu from "../assets/menu.png";
 import { useEffect } from "react";
 import React, { useState, useRef } from "react";
@@ -47,11 +47,11 @@ function Navbar() {
     <>
       <div className="navbar-container">
         <div id="title-group">
-          <img src={msu} id="logo"></img>
+          <img src={logo} id="logo"></img>
           <p className="navbar-font" id="title-font">
-            Spotify MyList
+            MyListify
           </p>
-          <img src={msu} id="logo"></img>
+          <img src={logo} id="logo"></img>
         </div>
       </div>
       <button id="menu-button" ref={menuButton}>

@@ -1,6 +1,6 @@
 .stat-header-container {
   height: 15rem;
-  margin-top: -4rem;
+  margin-top: -4.1rem;
   background-image: linear-gradient(#498876, #2e3f3a);
 }
 
@@ -11,10 +11,11 @@
   margin-right: auto;
   font-weight: bolder;
   transition: font-size 0.5s, padding-top 0.5s;
+  width: fit-content;
 }
 
 .selection-container {
-  margin-top: -5.1rem;
+  margin-top: -4rem;
 }
 
 .stat-header-gradient {
@@ -35,6 +36,7 @@
   background-image: linear-gradient(#111312, #000000);
   height: fit-content;
   min-height: 65vh;
+  margin-top: -0.1rem;
 }
 
 .sub-stat-header-font {
@@ -68,5 +70,8 @@
   .stats-header-font {
     font-size: 2rem;
     padding-top: 6rem;
+  }
+  .stat-header-container {
+    margin-top: -3.8rem;
   }
 }
