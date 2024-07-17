@@ -1,3 +1,4 @@
+// require("dotenv").config();
 //////////////////////////////////////////////////////////////////////
 //                        Event Listeners                           //
 //////////////////////////////////////////////////////////////////////
@@ -9,6 +10,8 @@ const logoutButton = document.querySelector("#logout");
 //////////////////////////////////////////////////////////////////////
 const clientId = "2af4fbb025d541898fb163e490aeec27"; // Replace with your client ID
 const clientSecret = "b70414b150024d53bd68f8e2fece810f";
+// const clientId = process.env.CLIENT_ID;
+// const clientSecret = process.env.CLIENT_SECRET; // Replace with your client ID
 const redirect_uri = "http://localhost:5173/callback";
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
@@ -292,7 +295,7 @@ async function generateAlbum(playlistGenres, playlistTitle, imagePath) {
   return playlistURI;
 }
 
-async function getTopTracks(timeRange="medium_term") {
+async function getTopTracks(timeRange = "medium_term") {
   await refreshToken();
   var token = localStorage.getItem("access_token");
   try {
@@ -313,7 +316,7 @@ async function getTopTracks(timeRange="medium_term") {
   }
 }
 
-async function getTopArtists(timeRange="medium_term") {
+async function getTopArtists(timeRange = "medium_term") {
   await refreshToken();
   var token = localStorage.getItem("access_token");
 
